@@ -1,0 +1,42 @@
+{
+  "name": "kronung-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@brainhubeu/react-carousel": "^2.0.4",
+    "@emotion/react": "^11.10.6",
+    "@react-hookz/web": "^22.0.0",
+    "@react-three/drei": "^9.57.0",
+    "@react-three/fiber": "^8.11.9",
+    "@types/three": "^0.149.0",
+    "facepaint": "^1.2.1",
+    "framer-motion": "^10.0.2",
+    "framer-motion-3d": "^10.2.3",
+    "gsap": "^3.11.4",
+    "next": "13.2.3",
+    "next-image-export-optimizer": "^1.4.1",
+    "plyr-react": "^5.1.2",
+    "popmotion": "^11.0.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-type-animation": "^2.1.2",
+    "react-use": "^17.4.0",
+    "react-youtube": "^10.1.0",
+    "three": "^0.150.1",
+    "underscore": "^1.13.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "prettier": "^2.8.4"
+  }
+}
