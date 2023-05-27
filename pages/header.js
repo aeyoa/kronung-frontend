@@ -137,7 +137,7 @@ export default function IndexPage2(params) {
           <Column css={bp({ marginTop: 26 })}>{cover.right}</Column>
         </CoverRow>
         <CoverRow css={bp({ backgroundColor: "#F7F8F7" })}>
-          <Column css={bp({ marginBottom: -100 })}>
+          <Column css={bp({ marginBottom: 0 })}>
             <motion.div initial={{ y: 50 }} animate={{ y: 0 }}>
               <Image src={cover.image} style={{ width: "100%", height: "auto" }} alt=""></Image>
             </motion.div>

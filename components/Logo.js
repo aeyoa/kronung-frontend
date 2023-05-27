@@ -14,31 +14,33 @@ export default function Logo(props) {
   }, [mes])
   // if (p == 40) return <div></div>
   return (
-    <div
-      css={bp({
-        height: 88,
-        position: "fixed",
-        left: 0,
-        right: 0,
-        top: 0,
-        backgroundColor: "#fff",
-      })}>
+    <div css={bp({ height: 88, ...relative, zIndex: 9 })}>
       <div
-        ref={ref}
         css={bp({
-          position: "absolute",
-          left: props.fullwidth ? 22 : 470,
-          right: 22,
+          height: 88,
+          position: "fixed",
+          left: 0,
+          right: 0,
           top: 0,
-          bottom: 0,
+          backgroundColor: "#fff",
         })}>
-        <Letter l="K" x={p * -6} />
-        <Letter l="R" x={p * -5} />
-        <Letter l="O" x={p * -4} />
-        <Letter l="N" x={p * -3} />
-        <Letter l="U" x={p * -2} />
-        <Letter l="N" x={p * -1} />
-        <Letter l="G" x={p * -0} />
+        <div
+          ref={ref}
+          css={bp({
+            position: "absolute",
+            width: props.fullwidth ? "100%" : "70%",
+            right: 0,
+            top: 0,
+            bottom: 0,
+          })}>
+          <Letter l="K" x={p * -6} />
+          <Letter l="R" x={p * -5} />
+          <Letter l="O" x={p * -4} />
+          <Letter l="N" x={p * -3} />
+          <Letter l="U" x={p * -2} />
+          <Letter l="N" x={p * -1} />
+          <Letter l="G" x={p * -0} />
+        </div>
       </div>
     </div>
   )
@@ -49,7 +51,7 @@ function Letter({ x, l }) {
     <motion.div
       initial={{ y: -20, x: x - 6 }}
       animate={{ x: x - 6 }}
-      transition={{ type: "tween", duration: 0.5 }}
+      transition={{ type: "tween", duration: 0.2 }}
       css={bp({
         width: 25,
         height: 40,
