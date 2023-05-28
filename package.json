@@ -14,6 +14,7 @@
   "dependencies": {
     "@brainhubeu/react-carousel": "^2.0.4",
     "@emotion/react": "^11.10.6",
+    "@mantine/hooks": "^6.0.11",
     "@react-hookz/web": "^22.0.0",
     "@react-three/drei": "^9.57.0",
     "@react-three/fiber": "^8.11.9",
