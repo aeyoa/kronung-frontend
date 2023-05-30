@@ -2,13 +2,13 @@ import { sections } from "@/content/homepage"
 import bp from "@/styles/breakpoints"
 import { useViewportSize } from "@mantine/hooks"
 import Image from "next/image"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const ASPECT_RATIO = 0.64
 const TABLET = 640
 const COLUMN_WIDTH = 0.7
 
-export default function Sticky({ setStickyBottom }) {
+export default function Sticky({ setStickyBottom, section }) {
   const { width, height } = useViewportSize()
   const ref = useRef()
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Sticky({ setStickyBottom }) {
         window.scrollY +
         ref.current.getBoundingClientRect().height
     )
-  })
+  }, [width])
   let w, h, top
   if (width < TABLET) {
     w = width
@@ -39,6 +39,11 @@ export default function Sticky({ setStickyBottom }) {
     }
   }
 
+  let index = 0
+  if (section >= 0 && section < 6) {
+    index = section
+  }
+
   return (
     <div
       ref={ref}
@@ -56,7 +61,7 @@ export default function Sticky({ setStickyBottom }) {
         top,
       })}>
       <Image
-        src={sections[0].image}
+        src={sections[index].image}
         style={{
           width: "100%",
           height: "auto",
