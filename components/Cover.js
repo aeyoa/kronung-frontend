@@ -114,7 +114,7 @@ export default function Cover({ setShowTagsOnDesktop, setShowTagsOnMobile }) {
           <div css={bp({ marginTop: [20] })}>{cover.right}</div>
         </div>
       </div>
-      <motion.div style={{ y }} css={bp({ ...relative, marginTop: [-20, -100] })}>
+      <motion.div style={{}} css={bp({ ...relative, marginTop: [-20, -100] })}>
         <Image src={cover.image} style={{ width: "100%", height: "auto" }} alt=""></Image>
       </motion.div>
       <div

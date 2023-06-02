@@ -1,18 +1,15 @@
 import { addNbsp } from "@/lib/helpers"
 import bp from "@/styles/breakpoints"
 import { relative } from "@/styles/mixins"
-import { useInView } from "framer-motion"
+import { useInView, motion } from "framer-motion"
 import { useEffect, useRef } from "react"
-
-const SECTION = 6
 
 export default function Cards({ setSection }) {
   const ref = useRef()
-  const inView = useInView(ref, { margin: "0% 0% -50% 0%" })
+  const inView = useInView(ref, { margin: "-49% 0% -50% 0%" })
   useEffect(
     _ => {
-      console.log(inView)
-      if (inView) setSection(SECTION)
+      if (inView) setSection()
     },
     [inView]
   )
@@ -21,7 +18,7 @@ export default function Cards({ setSection }) {
     <div
       ref={ref}
       css={bp({
-        padding: "0 11px",
+        padding: ["0 5px", "0 11px"],
         display: "flex",
         flexWrap: "wrap",
         width: "100%",
@@ -68,18 +65,26 @@ export default function Cards({ setSection }) {
 
 function Card({ title, children }) {
   return (
-    <div
+    <motion.div
       css={bp({
         overflow: "hidden",
         width: ["100%", "50%"],
         // marginTop: 11,
-        marginBottom: 11,
-        padding: ["0 11px 11px 11px"],
+        marginBottom: 0,
+        padding: ["0 6px 6px 6px", "0 11px 11px 11px"],
+        padding: ["0 6px 6px 6px", "3px"],
         color: "#fff",
         flexBasis: ["100%", "50%"],
         ...relative,
       })}>
-      <div css={bp({ backgroundColor: "#A7C0CD", height: 470, padding: "33px 22px" })}>
+      <div
+        css={bp({
+          backgroundColor: "#A7C0CD",
+          backgroundColor: "#F7F8F7",
+          color: "#9D999A",
+          height: [470, 470],
+          padding: ["17px 17px", "33px 22px"],
+        })}>
         <h3
           css={bp({
             margin: 0,
@@ -96,17 +101,18 @@ function Card({ title, children }) {
         <div
           css={bp({
             position: "absolute",
-            bottom: 11,
-            left: 11,
-            right: 11,
-            padding: 22,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: [21, 31],
             fontSize: 15,
             letterSpacing: "-0.3px",
             lineHeight: "1.5em",
+            color: "#5c5858",
           })}>
           {children}
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

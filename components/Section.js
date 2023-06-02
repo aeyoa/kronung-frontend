@@ -40,7 +40,7 @@ const Title = ({ number, text, show }) => {
 
   return (
     <div ref={ref}>
-      <AnimatedWord transparent inView={show} order={0}>
+      <AnimatedWord transparent inView={true} order={0}>
         {number}
       </AnimatedWord>
       {words.map((word, index) => {
@@ -56,7 +56,7 @@ const Title = ({ number, text, show }) => {
 
 const Section = ({ index, notMobile, section, setSection, active }) => {
   const ref = useRef()
-  const inView = useInView(ref, { margin: "-45% 0% -45% 0%" })
+  const inView = useInView(ref, { margin: "-50% 0% -10% 0%" })
   useEffect(() => {
     if (inView) {
       setSection(index)
@@ -70,7 +70,7 @@ const Section = ({ index, notMobile, section, setSection, active }) => {
         ...relative,
         // zIndex: index == 0 ? 6 : 0,
         display: "flex",
-        padding: ["0 22px 40px 44px", "0 22px 70px 44px"],
+        padding: ["0 22px 40px 22px", "0 22px 70px 44px"],
         // marginBottom: notMobile ? 0 : ,
       })}>
       <div css={bp({ fontSize: [15], lineHeight: 1.4 })}>

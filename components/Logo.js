@@ -3,6 +3,7 @@ import { centerWithAbsolute, relative } from "@/styles/mixins"
 import { useMeasure } from "@react-hookz/web"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
+import { useScrollIntoView } from "@mantine/hooks"
 
 export default function Logo(props) {
   const [mes, ref] = useMeasure()
@@ -51,7 +52,7 @@ function Letter({ x, l }) {
     <motion.div
       initial={{ y: -20, x: x - 6 }}
       animate={{ x: x - 6 }}
-      transition={{ type: "tween", duration: 0.2 }}
+      transition={{ type: "tween", duration: 0.2, initial: false }}
       css={bp({
         width: 25,
         height: 40,

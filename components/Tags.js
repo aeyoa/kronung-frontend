@@ -23,9 +23,6 @@ export default function Tags({ section, show, hide }) {
   useEffect(
     _ => {
       if (section > 5) {
-        // setTimeout(() => {
-
-        // }, 1000)
         setOnlyLast(true)
       } else {
         setOnlyLast(false)
@@ -78,10 +75,10 @@ function Tag({ text, active, position, show, index, hide }) {
           css={bp({
             ...noSelect,
             fontFamily: "ApercuMonoPro-Medium",
-            display: hide ? "none" : "inline-block",
             textTransform: "uppercase",
             fontSize: [11, 12],
-            padding: ["10px 13px 9px", "10px 13px 9px"],
+            display: hide ? "none" : "inline-block",
+            padding: ["10px 9px 9px", "10px 13px 9px"],
             backgroundColor: active ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.5)",
             margin: "0 5px 5px 0",
             borderRadius: 2,

@@ -22,7 +22,7 @@ export default function Sticky({ setStickyBottom, section }) {
   if (width < TABLET) {
     w = width
     h = w * ASPECT_RATIO
-    top = 240
+    top = 210
   } else {
     const areaWidth = width * COLUMN_WIDTH - 88
     const areaHeight = height - 88 - 22 - 44

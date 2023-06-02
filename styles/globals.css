@@ -1,14 +1,14 @@
-@font-face {
+/* @font-face {
   font-family: "DrukBold";
   src: url("/Druk-Bold-Web.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
   font-display: block;
-}
+} */
 
 @font-face {
   font-family: "DrukSuper";
-  src: url("/DrukCyTTSuper.woff2") format("woff2");
+  src: url("/DrukCyr-Heavy.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: block;
@@ -21,13 +21,13 @@
   font-style: normal;
   font-display: block;
 }
-@font-face {
+/* @font-face {
   font-family: "Basis";
   src: url("/BasisGrotesquePro-Italic.woff2") format("woff2");
   font-weight: normal;
   font-style: italic;
   font-display: block;
-}
+} */
 @font-face {
   font-family: "ApercuMonoPro-Medium";
   src: url("/ApercuMonoPro-Medium.woff2") format("woff2");

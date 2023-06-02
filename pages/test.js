@@ -16,6 +16,8 @@ import { useInView } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
+import Contact from "@/components/Contact"
+import Footer from "@/components/Footer"
 
 export default function test(params) {
   const { width, height } = useViewportSize()
@@ -92,7 +94,10 @@ export default function test(params) {
   return (
     <div css={bp({})}>
       <Logo fullwidth={!shrink}></Logo>
-      <div css={bp({ ...relative })}>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1, transition: { duration: 0.3 } }}
+        css={bp({ ...relative })}>
         {/* Background */}
         <div css={bp({ ...absoluteFill, bottom: 0, pointerEvents: "none" })}>
           <div
@@ -143,7 +148,7 @@ export default function test(params) {
               flexBasis: "30%",
               paddingTop: 0,
               zIndex: 10,
-              paddingBottom: [100, 300],
+              paddingBottom: [0, 300],
               paddingTop: ["75%", 0],
             })}>
             <div ref={contentRef}>
@@ -160,7 +165,7 @@ export default function test(params) {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
       <div
         css={bp({
           position: "fixed",
@@ -191,27 +196,29 @@ export default function test(params) {
           marginTop: -22,
           marginLeft: "auto",
           zIndex: 5,
-          paddingBottom: 22,
+          paddingBottom: [11, 22],
           backgroundColor: "#fff",
         })}>
         <div
           css={bp({
-            padding: 22,
+            padding: [11, 22],
             backgroundColor: "#F7F8F7",
             // boxShadow: "0 1px 5px 0 rgba(0,0,0,0.16)",
-            margin: "0 22px",
+            margin: ["0 11px", "0 22px"],
           })}>
           <div css={bp({ opacity: 0 })}>
             {/* Fake tags */}
-            <Tags onlyLast show />
+            <Tags section={7} show />
           </div>
         </div>
       </div>
       <div css={bp({})}>
-        <Cards setSection={setSection} />
+        <Cards setSection={() => setSection(6)} />
       </div>
-      <Projects />
-      <FAQ />
+      <Projects setSection={() => setSection(7)} />
+      <FAQ setSection={() => setSection(8)} />
+      <Contact setSection={() => setSection(9)} />
+      <Footer />
     </div>
   )
 }
