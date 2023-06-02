@@ -1,18 +1,55 @@
+import { addNbsp } from "@/lib/helpers"
 import bp from "@/styles/breakpoints"
 import { relative } from "@/styles/mixins"
-import Slider, { slidesToShowPlugin } from "@brainhubeu/react-carousel"
-import "@brainhubeu/react-carousel/lib/style.css"
+import { useInView } from "framer-motion"
+import { useEffect, useRef } from "react"
 
-export default function Cards(params) {
+const SECTION = 6
+
+export default function Cards({ setSection }) {
+  const ref = useRef()
+  const inView = useInView(ref, { margin: "0% 0% -50% 0%" })
+  useEffect(
+    _ => {
+      console.log(inView)
+      if (inView) setSection(SECTION)
+    },
+    [inView]
+  )
+
   return (
     <div
+      ref={ref}
       css={bp({
         padding: "0 11px",
         display: "flex",
+        flexWrap: "wrap",
         width: "100%",
-        position: "sticky",
-        top: 225,
       })}>
+      <Card title="Недвижимость всегда в цене">
+        Фондовые рынки рушатся, криптовалюты взлетают и падают, золотовалютные резервы куда-то
+        пропадают… и только старая-добрая недвижимость — стоит (и стóит) и будет стоять (и стоить).
+        Пока люди ходят за продуктами, стригутся и покупают одежду — коммерческая недвижимость будет
+        в цене.{" "}
+      </Card>
+      <Card title="Нулевые риски для клиентов">
+        Фондовые рынки рушатся, криптовалюты взлетают и падают, золотовалютные резервы куда-то
+        пропадают… и только старая-добрая недвижимость — стоит (и стóит) и будет стоять (и стоить).
+        Пока люди ходят за продуктами, стригутся и покупают одежду — коммерческая недвижимость будет
+        в цене.{" "}
+      </Card>
+      <Card title="Недвижимость всегда в цене">
+        Фондовые рынки рушатся, криптовалюты взлетают и падают, золотовалютные резервы куда-то
+        пропадают… и только старая-добрая недвижимость — стоит (и стóит) и будет стоять (и стоить).
+        Пока люди ходят за продуктами, стригутся и покупают одежду — коммерческая недвижимость будет
+        в цене.{" "}
+      </Card>
+      <Card title="Недвижимость всегда в цене">
+        Фондовые рынки рушатся, криптовалюты взлетают и падают, золотовалютные резервы куда-то
+        пропадают… и только старая-добрая недвижимость — стоит (и стóит) и будет стоять (и стоить).
+        Пока люди ходят за продуктами, стригутся и покупают одежду — коммерческая недвижимость будет
+        в цене.{" "}
+      </Card>
       <Card title="Недвижимость всегда в цене">
         Фондовые рынки рушатся, криптовалюты взлетают и падают, золотовалютные резервы куда-то
         пропадают… и только старая-добрая недвижимость — стоит (и стóит) и будет стоять (и стоить).
@@ -33,28 +70,33 @@ function Card({ title, children }) {
   return (
     <div
       css={bp({
+        overflow: "hidden",
         width: ["100%", "50%"],
         // marginTop: 11,
-        // marginBottom: 11,
+        marginBottom: 11,
         padding: ["0 11px 11px 11px"],
         color: "#fff",
-        flexBasis: "50%",
+        flexBasis: ["100%", "50%"],
+        ...relative,
       })}>
-      <div css={bp({ backgroundColor: "#A7C0CD", height: 470, padding: 11 })}>
+      <div css={bp({ backgroundColor: "#A7C0CD", height: 470, padding: "33px 22px" })}>
         <h3
           css={bp({
             margin: 0,
-            fontWeight: "bold",
-            fontSize: 72,
+            fontFamily: "DrukSuper",
+            textTransform: "uppercase",
+            fontSize: [50, 50, 70],
             lineHeight: "0.75em",
             ...relative,
+            letterSpacing: "1px",
+            lineHeight: 1,
           })}>
-          {title}
+          {addNbsp(title)}
         </h3>
         <div
           css={bp({
             position: "absolute",
-            bottom: 0,
+            bottom: 11,
             left: 11,
             right: 11,
             padding: 22,

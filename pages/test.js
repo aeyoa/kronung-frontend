@@ -1,4 +1,5 @@
 import Cards from "@/components/Cards"
+import Cover from "@/components/Cover"
 import FAQ from "@/components/FAQ"
 import Logo from "@/components/Logo"
 import Projects from "@/components/Projects"
@@ -14,6 +15,7 @@ import { useMediaQuery, useViewportSize } from "@mantine/hooks"
 import { useInView } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 
 export default function test(params) {
   const { width, height } = useViewportSize()
@@ -23,8 +25,12 @@ export default function test(params) {
   const observer = useRef()
   const [showFirstTags, setShowFirstTags] = useState(false)
   const secondTags = useRef()
-  const secondTagsInView = useInView(secondTags, { amount: 1 })
+  const secondTagsInView = useInView(secondTags, { margin: "-40% 0% 0% 0%" })
   const [section, setSection] = useState(0)
+
+  const [showTagsOnDesktop, setShowTagsOnDesktop] = useState(false)
+  const [showTagsOnMobile, setShowTagsOnMobile] = useState(false)
+
   useEffect(
     _ => {
       setShowFirstTags(!secondTagsInView)
@@ -39,7 +45,7 @@ export default function test(params) {
           setHits(e.isIntersecting)
           setShowFirstTags(e.isIntersecting)
         },
-        { rootMargin: `0px 0px -${Math.round((1 - (88 + 50) / height) * 100)}% 0px` }
+        { rootMargin: `0px 0px -${Math.round((1 - (88 + 75) / height) * 100)}% 0px` }
       )
       observer.current.observe(contentRef.current)
     }
@@ -48,8 +54,22 @@ export default function test(params) {
   const [stickyBottom, setStickyBottom] = useState(999)
   const shrink = hits && notMobile
   // const shrink = false
+  // const [showTags, setShowTags] = useState(false)
+  // useEffect(() => {
+  //   if (hits) {
+  //     setShowTags(true)
+  //   }
+  // }, [hits])
 
-  const stickyBackgroundTop = 150 + width * 0.64 - stickyBottom
+  let showTags = false
+  if (notMobile) {
+    showTags = showTagsOnDesktop
+  } else {
+    showTags = showTagsOnMobile
+  }
+  // if (secondTagsInView) showTags = false
+
+  const stickyBackgroundTop = 200 + width * 0.64 - stickyBottom
 
   const onScroll = () => {}
 
@@ -68,10 +88,7 @@ export default function test(params) {
       window.removeEventListener("scroll", onScroll)
     }
   }, [])
-  useEffect(
-    _ => console.log(stickyBottom, stickyBackgroundTop),
-    [stickyBottom, stickyBackgroundTop]
-  )
+
   return (
     <div css={bp({})}>
       <Logo fullwidth={!shrink}></Logo>
@@ -88,25 +105,24 @@ export default function test(params) {
               transition: "width 200ms ease",
               zIndex: 5,
             })}>
-            <div
+            <motion.div
+              // initial={{ opacity: 0 }}
+              // animate={{ opacity: 1, transition: { delay: 0.4, duration: 0.1 } }}
               css={bp({
                 backgroundColor: "#F7F8F7",
                 position: "absolute",
                 top: 0,
-                left: 22,
+                left: [11, 22],
                 bottom: 22,
-                right: 22,
-              })}></div>
+                right: [11, 22],
+                opacity: 1,
+              })}></motion.div>
           </div>
         </div>
-        {/* Cover */}
-        <div css={bp({ ...relative, zIndex: 7 })}>
-          <div css={bp({ display: "flex" })}>
-            <div css={bp({ padding: 44 })}>{cover.left}</div>
-            <div css={bp({ padding: 44 })}>{cover.right}</div>
-          </div>
-          <Image src={cover.image} style={{ width: "100%", height: "auto" }} alt=""></Image>
-        </div>
+        <Cover
+          setShowTagsOnDesktop={setShowTagsOnDesktop}
+          setShowTagsOnMobile={setShowTagsOnMobile}
+        />
         {/* Content Scroller */}
         <div css={bp({ display: ["block", "flex"], flexDirection: "row-reverse", ...relative })}>
           {/* Sticky */}
@@ -122,15 +138,23 @@ export default function test(params) {
             <Sticky setStickyBottom={setStickyBottom} section={section} />
           </div>
           {/* Content */}
-          <div css={bp({ flexBasis: "30%", paddingTop: 0, zIndex: 10, paddingBottom: 300 })}>
+          <div
+            css={bp({
+              flexBasis: "30%",
+              paddingTop: 0,
+              zIndex: 10,
+              paddingBottom: [100, 300],
+              paddingTop: ["75%", 0],
+            })}>
             <div ref={contentRef}>
-              {sections.map((section, index) => (
+              {sections.map((elem, index) => (
                 <Section
                   key={index}
                   index={index}
                   notMobile={notMobile}
-                  section={section}
+                  section={elem}
                   setSection={setSection}
+                  active={index == section}
                 />
               ))}
             </div>
@@ -145,13 +169,15 @@ export default function test(params) {
           transition: "left 200ms ease",
           zIndex: 7,
           width: ["100%", "70%"],
-          padding: 44,
+          padding: ["33px 22px", 44],
         })}>
         {true && (
           <Tags
             section={section}
-            show={(shrink && !secondTagsInView) || !shrink}
-            onlyLast={!shrink}
+            // show={(shrink && !secondTagsInView) || !shrink}
+            show={showTags}
+            hide={secondTagsInView}
+            // onlyLast={!shrink}
           />
         )}
       </div>
@@ -161,10 +187,10 @@ export default function test(params) {
           width: shrink ? "70%" : "100%",
           transition: "width 200ms ease",
           position: "sticky",
-          top: 88,
+          top: 87,
           marginTop: -22,
           marginLeft: "auto",
-          zIndex: 6,
+          zIndex: 5,
           paddingBottom: 22,
           backgroundColor: "#fff",
         })}>
@@ -181,11 +207,11 @@ export default function test(params) {
           </div>
         </div>
       </div>
-      {/* <div css={bp({})}>
-        <Cards />
+      <div css={bp({})}>
+        <Cards setSection={setSection} />
       </div>
       <Projects />
-      <FAQ /> */}
+      <FAQ />
     </div>
   )
 }

@@ -48,3 +48,5 @@ export const inlineSvg = {
 }
 
 export const bgc = colorOrArray => ({ backgroundColor: colorOrArray })
+
+export const primaryColor = "#3C95B6"
