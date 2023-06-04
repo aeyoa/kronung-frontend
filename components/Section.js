@@ -24,7 +24,7 @@ const AnimatedWord = ({ children, transparent, inView, order, show }) => {
             opacity: inView ? 1 : 0,
             transition: { type: "tween", duration: 0.25, delay: order * 0.05 },
           }}
-          css={bp({ position: "absolute", top: 4 })}>
+          css={bp({ position: "absolute", top: 0 })}>
           {children}
         </motion.div>
       </div>
@@ -56,7 +56,7 @@ const Title = ({ number, text, show }) => {
 
 const Section = ({ index, notMobile, section, setSection, active }) => {
   const ref = useRef()
-  const inView = useInView(ref, { margin: "-50% 0% -10% 0%" })
+  const inView = useInView(ref, { margin: "-50% 0% -49% 0%" })
   useEffect(() => {
     if (inView) {
       setSection(index)
@@ -64,6 +64,7 @@ const Section = ({ index, notMobile, section, setSection, active }) => {
   }, [inView])
   return (
     <div
+      id={`section-${index}`}
       ref={ref}
       key={index}
       css={bp({

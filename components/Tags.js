@@ -3,19 +3,21 @@ import { last } from "underscore"
 import { motion, AnimatePresence } from "framer-motion"
 import { noSelect } from "@/styles/mixins"
 import { useEffect, useState } from "react"
+import { useScrollIntoView } from "@mantine/hooks"
 
 export default function Tags({ section, show, hide }) {
+  useEffect(_ => console.log("Section:", section - 1), [section])
+
   const initial = [
-    // { text: "ВСТУПЛЕНИЕ", position: 0 },
-    { text: "ВЫБОР ЗЕМЛИ", position: 0 },
-    { text: "ПРОЕКТИРОВАНИЕ", position: 1050 },
-    { text: "СТРОИТЕЛЬСТВО", position: 2150 },
-    { text: "ПОИСК АРЕНДАТОРОВ", position: 0 },
-    { text: "ЖИЗНЬ", position: 0 },
-    { text: "АРГУМЕНТЫ ЗА", position: 0 },
-    { text: "ПРОЕКТЫ", position: 0 },
-    { text: "ВОПРОСЫ", position: 0 },
-    { text: "СВЯЗЬ С НАМИ", position: 0 },
+    { text: "ВЫБОР ЗЕМЛИ", id: "section-1" },
+    { text: "ПРОЕКТИРОВАНИЕ", id: "section-2" },
+    { text: "СТРОИТЕЛЬСТВО", id: "section-3" },
+    { text: "ПОИСК АРЕНДАТОРОВ", id: "section-4" },
+    { text: "ЖИЗНЬ", id: "section-5" },
+    { text: "АРГУМЕНТЫ ЗА", id: "section-cards" },
+    { text: "ПРОЕКТЫ", id: "section-projects" },
+    { text: "ВОПРОСЫ", id: "section-faq" },
+    { text: "СВЯЗЬ С НАМИ", id: "section-contact" },
   ]
   // const tags = onlyLast ? last(initial, 4) : initial
   const tags = initial
@@ -45,14 +47,18 @@ export default function Tags({ section, show, hide }) {
           text={text.text}
           key={index}
           active={index == section - 1}
-          position={text.position}
+          id={text.id}
         />
       ))}
     </motion.div>
   )
 }
 
-function Tag({ text, active, position, show, index, hide }) {
+function Tag({ text, active, show, index, hide, id }) {
+  const scrollToSection = () => {
+    const offset = document.getElementById(id).getBoundingClientRect().top + window.scrollY - 190
+    window.scrollTo({ top: offset, behavior: "smooth" })
+  }
   return (
     <AnimatePresence>
       {show && (
@@ -62,15 +68,33 @@ function Tag({ text, active, position, show, index, hide }) {
             boxShadow: "0 1px 3px 0 rgba(0,0,0,0.09), 0 0 26px 0 rgba(137,131,131,0.09)",
           }}
           whileTap={{ scale: 0.95 }}
-          initial={{ opacity: 0, y: 5 }}
-          animate={{ opacity: 1, y: 0, transition: { delay: index * 0.03, duration: 0.3 } }}
+          initial={{
+            opacity: 0,
+            y: 5,
+            backgroundColor: "rgba(255,255,255,0.5)",
+            color: "#69696B",
+            boxShadow: "none",
+          }}
+          // style={{
+
+          // }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            transition: { delay: index * 0.03, duration: 0.3 },
+            backgroundColor: active ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.5)",
+            color: active ? "#3891B2" : "#69696B",
+            boxShadow: active
+              ? "0 1px 3px 0 rgba(0,0,0,0.09), 0 0 26px 0 rgba(137,131,131,0.09)"
+              : "",
+          }}
           exit={{
             opacity: 0,
             y: 0,
             transition: { delay: (10 - index) * 0.02, duration: 0.2 },
           }}
           onClick={() => {
-            // window.scrollTo({ top: position, behavior: "smooth" })
+            scrollToSection()
           }}
           css={bp({
             ...noSelect,
@@ -79,14 +103,9 @@ function Tag({ text, active, position, show, index, hide }) {
             fontSize: [11, 12],
             display: hide ? "none" : "inline-block",
             padding: ["10px 9px 9px", "10px 13px 9px"],
-            backgroundColor: active ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.5)",
             margin: "0 5px 5px 0",
             borderRadius: 2,
-            color: active ? "#3891B2" : "#69696B",
             cursor: "pointer",
-            boxShadow: active
-              ? "0 1px 3px 0 rgba(0,0,0,0.09), 0 0 26px 0 rgba(137,131,131,0.09)"
-              : "",
           })}>
           {text}
         </motion.div>

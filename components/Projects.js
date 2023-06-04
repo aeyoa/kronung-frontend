@@ -43,7 +43,7 @@ const AnimatedImage = () => {
   )
 }
 
-export default function Projects({ setSection }) {
+export default function Projects({ setSection, id }) {
   const ref = useRef()
   const inView = useInView(ref, { margin: "-49% 0% -50% 0%" })
   useEffect(
@@ -53,7 +53,7 @@ export default function Projects({ setSection }) {
     [inView]
   )
   return (
-    <div ref={ref} css={bp({ margin: "11px" })}>
+    <div ref={ref} id={id} css={bp({ margin: "11px" })}>
       {/* Main desc */}
       <div
         css={bp({

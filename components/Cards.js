@@ -4,7 +4,7 @@ import { relative } from "@/styles/mixins"
 import { useInView, motion } from "framer-motion"
 import { useEffect, useRef } from "react"
 
-export default function Cards({ setSection }) {
+export default function Cards({ setSection, id }) {
   const ref = useRef()
   const inView = useInView(ref, { margin: "-49% 0% -50% 0%" })
   useEffect(
@@ -16,6 +16,7 @@ export default function Cards({ setSection }) {
 
   return (
     <div
+      id={id}
       ref={ref}
       css={bp({
         padding: ["0 5px", "0 11px"],

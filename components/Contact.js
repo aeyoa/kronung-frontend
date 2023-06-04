@@ -2,7 +2,7 @@ import bp from "@/styles/breakpoints"
 import { useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
-export default function Contact({ setSection }) {
+export default function Contact({ setSection, id }) {
   const ref = useRef()
   const inView = useInView(ref, { margin: "-49% 0% -50% 0%" })
   useEffect(
@@ -13,6 +13,7 @@ export default function Contact({ setSection }) {
   )
   return (
     <div
+      id={id}
       ref={ref}
       css={bp({
         margin: 22,
