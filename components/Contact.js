@@ -16,8 +16,8 @@ export default function Contact({ setSection, id }) {
       id={id}
       ref={ref}
       css={bp({
-        margin: 22,
-        padding: 22,
+        margin: [11, 22],
+        padding: [11, 22],
         backgroundColor: "#F7F8F7",
         minHeight: "calc(100vh - 88px - 202px)",
       })}>

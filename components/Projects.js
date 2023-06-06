@@ -1,18 +1,19 @@
 import bp from "@/styles/breakpoints"
-import { absoluteFill, relative } from "@/styles/mixins"
+import { absoluteFill, pointer, relative } from "@/styles/mixins"
 import Image from "next/image"
 import { motion, useInView, useScroll, useTransform } from "framer-motion"
 
 import project1 from "/public/img/project-1.jpg"
 import { useEffect, useRef } from "react"
 
-const AnimatedImage = () => {
+const AnimatedImage = ({ notMobile }) => {
   const { scrollY } = useScroll()
   const ref = useRef()
   const y = useTransform(scrollY, value => {
+    const factor = !notMobile ? -15 : -7.5
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect()
-      return rect.top / -7.5
+      return rect.top / factor
     } else {
       return 0
     }
@@ -30,20 +31,20 @@ const AnimatedImage = () => {
     <div
       ref={ref}
       css={bp({
-        margin: "22px 11px",
-        height: [250, 600],
+        margin: ["11px 0px", "22px 11px"],
+        height: [300, 600],
         backgroundColor: "#F7F8F7",
         ...relative,
         overflow: "hidden",
       })}>
-      <motion.div style={{ y }} css={bp({ ...absoluteFill })}>
+      <motion.div style={{ y, scale: 1.1 }} css={bp({ ...absoluteFill })}>
         <Image src={project1} fill css={bp({ objectFit: "cover" })} alt="*" />
       </motion.div>
     </div>
   )
 }
 
-export default function Projects({ setSection, id }) {
+export default function Projects({ setSection, id, notMobile }) {
   const ref = useRef()
   const inView = useInView(ref, { margin: "-49% 0% -50% 0%" })
   useEffect(
@@ -53,14 +54,15 @@ export default function Projects({ setSection, id }) {
     [inView]
   )
   return (
-    <div ref={ref} id={id} css={bp({ margin: "11px" })}>
+    <div ref={ref} id={id} css={bp({ margin: ["5px 11px", "11px"] })}>
       {/* Main desc */}
       <div
         css={bp({
-          margin: 11,
-          padding: 33,
+          margin: [0, 11],
+          padding: ["14px 14px", 33],
           backgroundColor: "#F7F8F7",
           display: ["block", "flex"],
+          ...pointer,
         })}>
         <h3
           css={bp({
@@ -68,9 +70,8 @@ export default function Projects({ setSection, id }) {
             fontFamily: "DrukSuper",
             textTransform: "uppercase",
             fontSize: [50, 50, 70],
-            lineHeight: 0.8,
+            lineHeight: 1,
             margin: 0,
-
             flexBasis: "50%",
           })}>
           Солнечный
@@ -80,6 +81,11 @@ export default function Projects({ setSection, id }) {
         <p
           css={bp({
             flexBasis: "50%",
+            margin: 0,
+            marginTop: [16, 0],
+            fontSize: 15,
+            letterSpacing: "-0.3px",
+            lineHeight: "1.5em",
           })}>
           Большой ТЦ в новом районе в поселке Горелово. Это будет целый кластер объектов с классной
           парковой территорией, детскими площадками, ресторанами и кафе. Запуск запланирован на 2024
@@ -88,15 +94,17 @@ export default function Projects({ setSection, id }) {
         </p>
       </div>
       {/* Main Image */}
-      <AnimatedImage src={project1} />
+      <AnimatedImage src={project1} notMobile={notMobile} />
       {/* Two more projects */}
-      <div css={bp({ display: "flex", alignContent: "flex-start" })}>
+      <div css={bp({ display: ["block", "flex"], alignContent: "flex-start" })}>
         <div
           css={bp({
-            margin: "0 11px",
+            margin: [0, "0 11px"],
             flexBasis: "50%",
-            padding: 22,
+            padding: [11, 22],
             backgroundColor: "#F7F8F7",
+            marginBottom: [11, 0],
+            ...pointer,
           })}>
           <h3
             css={bp({
@@ -104,7 +112,7 @@ export default function Projects({ setSection, id }) {
               fontFamily: "DrukSuper",
               textTransform: "uppercase",
               fontSize: [50, 50, 70],
-              lineHeight: 0.8,
+              lineHeight: 1,
               margin: 0,
             })}>
             Янино
@@ -114,10 +122,11 @@ export default function Projects({ setSection, id }) {
         </div>
         <div
           css={bp({
-            margin: "0 11px",
+            margin: [0, "0 11px"],
             flexBasis: "50%",
-            padding: 22,
+            padding: [11, 22],
             backgroundColor: "#F7F8F7",
+            ...pointer,
           })}>
           <h3
             css={bp({
@@ -125,7 +134,7 @@ export default function Projects({ setSection, id }) {
               fontFamily: "DrukSuper",
               textTransform: "uppercase",
               fontSize: [50, 50, 70],
-              lineHeight: 0.8,
+              lineHeight: 1,
               margin: 0,
             })}>
             Новый дом

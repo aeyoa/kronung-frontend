@@ -5,8 +5,8 @@ export default function Footer(params) {
     <div css={bp({ paddingBottom: 1 })}>
       <div
         css={bp({
-          margin: 22,
-          padding: 22,
+          margin: [11, 22],
+          padding: [11, 22],
           backgroundColor: "#F7F8F7",
           display: ["block", "flex"],
           justifyContent: "space-between",

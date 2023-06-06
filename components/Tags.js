@@ -6,8 +6,6 @@ import { useEffect, useState } from "react"
 import { useScrollIntoView } from "@mantine/hooks"
 
 export default function Tags({ section, show, hide }) {
-  useEffect(_ => console.log("Section:", section - 1), [section])
-
   const initial = [
     { text: "ВЫБОР ЗЕМЛИ", id: "section-1" },
     { text: "ПРОЕКТИРОВАНИЕ", id: "section-2" },

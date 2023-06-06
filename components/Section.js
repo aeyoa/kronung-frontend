@@ -57,11 +57,15 @@ const Title = ({ number, text, show }) => {
 const Section = ({ index, notMobile, section, setSection, active }) => {
   const ref = useRef()
   const inView = useInView(ref, { margin: "-50% 0% -49% 0%" })
+  const inViewOnMobile = useInView(ref, { margin: "-79% 0% -20% 0%" })
   useEffect(() => {
-    if (inView) {
+    if (notMobile && inView) {
       setSection(index)
     }
-  }, [inView])
+    if (!notMobile && inViewOnMobile) {
+      setSection(index)
+    }
+  }, [inView, inViewOnMobile])
   return (
     <div
       id={`section-${index}`}
@@ -71,7 +75,7 @@ const Section = ({ index, notMobile, section, setSection, active }) => {
         ...relative,
         // zIndex: index == 0 ? 6 : 0,
         display: "flex",
-        padding: ["0 22px 40px 22px", "0 22px 70px 44px"],
+        padding: ["0 22px 40px 22px", "0 22px 70px 33px", "0 22px 70px 44px"],
         // marginBottom: notMobile ? 0 : ,
       })}>
       <div css={bp({ fontSize: [15], lineHeight: 1.4 })}>

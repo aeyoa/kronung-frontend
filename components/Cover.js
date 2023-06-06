@@ -5,7 +5,7 @@ import { AnimatePresence, useInView, useScroll, useTransform } from "framer-moti
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
-import { useInterval } from "@mantine/hooks"
+import { useElementSize, useInterval } from "@mantine/hooks"
 
 const Title = () => {
   const titles = [
@@ -14,12 +14,12 @@ const Title = () => {
     "Строительный инвестфонд",
   ]
   const [focus, setFocus] = useState(0)
-  // const interval = useInterval(() => setFocus(s => s + 1), 3000)
+  const interval = useInterval(() => setFocus(s => s + 1), 3000)
 
-  // useEffect(() => {
-  //   interval.start()
-  //   return interval.stop
-  // }, [])
+  useEffect(() => {
+    interval.start()
+    return interval.stop
+  }, [])
   const first = titles[(0 + focus) % 3]
   const second = titles[(1 + focus) % 3]
   const third = titles[(2 + focus) % 3]
@@ -63,6 +63,8 @@ export default function Cover({ setShowTagsOnDesktop, setShowTagsOnMobile }) {
   //   [imageInView]
   // )
 
+  const { ref: titleRef, width } = useElementSize()
+
   const ref = useRef()
   const inView = useInView(ref, { margin: "-88px 0px 0px 0px" })
   useEffect(
@@ -76,19 +78,30 @@ export default function Cover({ setShowTagsOnDesktop, setShowTagsOnMobile }) {
   const y = useTransform(scrollY, [0, 500], [0, 75], { clamp: true })
   const opacity = useTransform(scrollY, [20, 100], [1, 0.75], { clamp: false })
   // const scale = useTransform(scrollY, [0, 1000], [1, 1.02], { clamp: true })
+
   return (
     <div
       ref={ref}
-      css={bp({ ...relative, zIndex: 8, padding: ["11px 18px", "22px 33px"], marginBottom: 0 })}>
-      <div css={bp({ display: "flex", flexWrap: "wrap", marginBottom: 20 })}>
-        <div css={bp({ padding: "0 11px", width: ["100%", "50%"], textAlign: "justify" })}>
+      css={bp({ ...relative, zIndex: 8, _padding: ["11px 18px", "22px 33px"], marginBottom: 0 })}>
+      <div
+        css={bp({
+          display: "flex",
+          flexWrap: "wrap",
+          marginBottom: 20,
+          padding: ["11px 18px", "6px 22px", "10px 33px"],
+        })}>
+        <div
+          css={bp({
+            padding: ["0 11px", 0, "0 11px"],
+            width: ["100%", "50%"],
+            textAlign: "justify",
+          })}>
           <motion.h1
-            style={{ opacity }}
+            style={{ opacity, fontSize: (120 / 617) * width }}
             css={bp({
               textAlign: "left",
               fontFamily: "DrukSuper",
               color: primaryColor,
-              fontSize: [60, 110],
               lineHeight: 0.9,
               margin: 0,
               margin: ["11px 0", "22px 11px"],
@@ -97,18 +110,20 @@ export default function Cover({ setShowTagsOnDesktop, setShowTagsOnMobile }) {
               ...relative,
               display: "block",
             })}>
-            <div css={bp({ opacity: 0 })}>Зарабатываем для вас деньги</div>
+            <div ref={titleRef} css={bp({ opacity: 0 })}>
+              Зарабатываем для вас деньги
+            </div>
             <Title />
           </motion.h1>
         </div>
         <div
           css={bp({
             display: ["none", "block"],
-            padding: "11px 11px",
+            padding: ["11px 11px", "20px 11px 11px", "22px 11px 11px"],
             width: ["100%", "50%"],
             _textAlign: "justify",
             fontSize: [15],
-            lineHeight: [1.4, 1.75],
+            lineHeight: [1.4, 1.6],
           })}>
           <div>{cover.left}</div>
           <div css={bp({ marginTop: [20] })}>{cover.right}</div>
@@ -120,14 +135,14 @@ export default function Cover({ setShowTagsOnDesktop, setShowTagsOnMobile }) {
       <div
         css={bp({
           display: ["block", "none"],
-          padding: ["25px 11px", "0 11px"],
+          padding: ["6px 30px 0"],
           width: ["100%", "50%"],
           _textAlign: "justify",
           fontSize: [15],
           lineHeight: [1.4, 1.75],
         })}>
         <div>{cover.left}</div>
-        <div css={bp({ marginTop: [20] })}>{cover.right}</div>
+        <div css={bp({ marginTop: [16] })}>{cover.right}</div>
       </div>
     </div>
   )

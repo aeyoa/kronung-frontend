@@ -215,7 +215,7 @@ export default function test(params) {
       <div css={bp({})}>
         <Cards setSection={() => setSection(6)} id="section-cards" />
       </div>
-      <Projects setSection={() => setSection(7)} id="section-projects" />
+      <Projects setSection={() => setSection(7)} id="section-projects" notMobile={notMobile} />
       <FAQ setSection={() => setSection(8)} id="section-faq" />
       <Contact setSection={() => setSection(9)} id="section-contact" />
       <Footer />
