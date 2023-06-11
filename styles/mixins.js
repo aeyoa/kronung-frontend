@@ -47,6 +47,10 @@ export const inlineSvg = {
   width: ["auto"],
 }
 
+export const boxPadding = {
+  padding: [6, 11],
+}
+
 export const bgc = colorOrArray => ({ backgroundColor: colorOrArray })
 
 export const primaryColor = "#3C95B6"

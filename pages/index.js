@@ -1,346 +1,226 @@
-import bp from "@/styles/breakpoints"
-import { absoluteFill } from "@/styles/mixins"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { motion, useAnimationControls } from "framer-motion"
+import Cards from "@/components/Cards"
+import Cover from "@/components/Cover"
+import FAQ from "@/components/FAQ"
 import Logo from "@/components/Logo"
-
+import Projects from "@/components/Projects"
+import Section from "@/components/Section"
+import Sensor from "@/components/Sensor"
+import Sticky from "@/components/Sticky"
 import Tags from "@/components/Tags"
-import dynamic from "next/dynamic"
-import { cover, sections } from "@/content/homepage"
+import { cover } from "@/content/homepage"
+import { sections } from "@/content/homepage"
+import bp from "@/styles/breakpoints"
+import { absoluteFill, relative } from "@/styles/mixins"
+import { useMediaQuery, useViewportSize } from "@mantine/hooks"
+import { useInView } from "framer-motion"
+import Image from "next/image"
+import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
+import Contact from "@/components/Contact"
+import Footer from "@/components/Footer"
 
-import kron1 from "/public/img/kron1.png"
-import kron2 from "/public/img/kron2.png"
-import kron3 from "/public/img/kron3.png"
-import kron4 from "/public/img/kron4.png"
-import kron5 from "/public/img/kron5.png"
+export default function test(params) {
+  const { width, height } = useViewportSize()
+  const notMobile = useMediaQuery("(min-width: 640px)")
+  const [hits, setHits] = useState(false)
+  const contentRef = useRef()
+  const observer = useRef()
+  const [showFirstTags, setShowFirstTags] = useState(false)
+  const secondTags = useRef()
+  const secondTagsInView = useInView(secondTags, { margin: "-40% 0% 0% 0%" })
+  const [section, setSection] = useState(0)
 
-const Cards = dynamic(() => import("@/components/Cards"), { ssr: false })
+  const [showTagsOnDesktop, setShowTagsOnDesktop] = useState(false)
+  const [showTagsOnMobile, setShowTagsOnMobile] = useState(false)
 
-const Section = ({ index, title, children, setStep, step }) => (
-  <motion.div
-    key={index}
-    initial={{ opacity: 0.2 }}
-    animate={{ opacity: index - 2 == step ? 1 : 0.2 }}
-    viewport={{ amount: 0.4 }}
-    onViewportEnter={() => {
-      setStep(index - 2)
-    }}
-    css={bp({ marginBottom: 100, padding: ["0 0 0 12px", "0 0 0 26px"] })}>
-    <h2
-      css={bp({ fontSize: [72], fontSize: [60], fontWeight: "bold", margin: 0, color: "#E0AED7" })}>
-      {0 + index}
-    </h2>
-    <h2
-      css={bp({
-        fontSize: [72],
-        fontSize: [60],
-        fontWeight: "bold",
-        margin: 0,
-        lineHeight: "0.75em",
-        overflowWrap: "anywhere",
-      })}>
-      {title}
-    </h2>
-    <div css={bp({ lineHeight: ["26px"], marginTop: 36 })}>{children}</div>
-  </motion.div>
-)
-
-const Row = ({ children }) => (
-  <div css={bp({ display: ["block", "flex", "flex"], flexDirection: "row-reverse" })}>
-    <div css={bp({ flexBasis: "67.66%", padding: ["0 11px", "0 22px"] })}>
-      <div css={bp({ __backgroundColor: "#F7F8F7", height: "100%" })}>{children[1]}</div>
-    </div>
-    <div css={bp({ flexBasis: "33.33%", padding: ["0 11px", "0 22px"] })}>{children[0]}</div>
-  </div>
-)
-
-const Container = props => (
-  <div css={bp({ padding: ["0 11px", "0 22px"] })} {...props}>
-    <div>{props.children}</div>
-  </div>
-)
-
-const CoverRow = props => (
-  <div css={bp({ padding: ["0 6px", "0 13px"] })} {...props}>
-    <div css={bp({ display: "flex" })}>{props.children}</div>
-  </div>
-)
-
-const Column = props => (
-  <div css={bp({ padding: ["0 6px", "0 13px"] })} {...props}>
-    <div>{props.children}</div>
-  </div>
-)
-
-// export default function IndexPage(params) {
-//   const [step, setStep] = useState(0)
-//   return (
-//     <>
-//       <Logo />
-//       <Container css={bp({ marginTop: 88 })}>
-//         <CoverRow
-//           css={bp({
-//             fontSize: 15,
-//             lineHeight: "1.7em",
-//             textAlign: "justify",
-//             backgroundColor: "#F7F8F7",
-//           })}>
-//           <Column css={bp({ marginTop: 26 })}>{cover.left}</Column>
-//           <Column css={bp({ marginTop: 26 })}>{cover.right}</Column>
-//         </CoverRow>
-//         <CoverRow css={bp({ backgroundColor: "#F7F8F7" })}>
-//           <Column css={bp({ marginBottom: -150 })}>
-//             <motion.div initial={{ y: 50 }} animate={{ y: 0 }}>
-//               <Image src={cover.image} style={{ width: "100%", height: "auto" }} alt=""></Image>
-//             </motion.div>
-//           </Column>
-//         </CoverRow>
-//       </Container>
-
-//       {sections.map((section, index) => (
-//         <Row key={index}>
-//           <Section step={step} setStep={setStep} title={section.title} index={index + 1}>
-//             {section.blocks.map((p, i) => (
-//               <p key={i}>{p}</p>
-//             ))}
-//           </Section>
-//           {section.image && (
-//             <Image alt="" src={section.image} style={{ width: "100%", height: "auto" }} />
-//           )}
-//         </Row>
-//       ))}
-//       {/* <Cards /> */}
-//     </>
-//   )
-// }
-
-export default function Home(params) {
-  const [step, setStep] = useState(0)
-  const controls = useAnimationControls()
+  useEffect(
+    _ => {
+      setShowFirstTags(!secondTagsInView)
+    },
+    [secondTagsInView]
+  )
   useEffect(() => {
-    // controls.start({
-    //   scale: 1,
-    //   rotate: 0,
-    //   transition: {
-    //     scale: { type: "spring", velocity: 5, stiffness: 2000, damping: 30 },
-    //     rotate: { type: "spring", velocity: 75, stiffness: 500, damping: 10 },
+    if (height > 0) {
+      if (observer.current) observer.current.unobserve(contentRef.current)
+      observer.current = new IntersectionObserver(
+        ([e]) => {
+          setHits(e.isIntersecting)
+          setShowFirstTags(e.isIntersecting)
+        },
+        { rootMargin: `0px 0px -${Math.round((1 - (88 + 75) / height) * 100)}% 0px` }
+      )
+      observer.current.observe(contentRef.current)
+    }
+  }, [height])
+
+  const [stickyBottom, setStickyBottom] = useState(999)
+  const shrink = hits && notMobile
+  // const shrink = false
+  // const [showTags, setShowTags] = useState(false)
+  // useEffect(() => {
+  //   if (hits) {
+  //     setShowTags(true)
+  //   }
+  // }, [hits])
+
+  let showTags = false
+  if (notMobile) {
+    showTags = showTagsOnDesktop
+  } else {
+    showTags = showTagsOnMobile
+  }
+  // if (secondTagsInView) showTags = false
+
+  const stickyBackgroundTop = 200 + width * 0.64 - stickyBottom
+
+  const onScroll = () => {}
+
+  useEffect(_ => {
+    // const observer = new IntersectionObserver(
+    //   ([e]) => {
+    //     setSticked(e.intersectionRatio == 1)
     //   },
-    // })
-    controls.start({
-      scale: 1,
-      transition: {
-        type: "spring",
-        velocity: -5,
-        stiffness: 500,
-        damping: 50,
-      },
-    })
-  }, [step])
-  const image = [kron1, kron2, kron3, kron4, kron5][step]
+    //   {
+    //     threshold: [1],
+    //   }
+    // )
+    // observer.observe(sticky.current)
+    window.addEventListener("scroll", onScroll)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+    }
+  }, [])
+
   return (
-    <div css={bp({ display: "flex" })}>
-      <Logo />
-      <div css={bp({ padding: 60, width: 475, paddingTop: 100 })}>
-        <Section step={step} setStep={setStep} index={2} title={`Выбор земли`}>
-          <p>
-            С недвижимостью как с едой. Сложно приготовить что-то вкусное из плохих продуктов. Так и
-            со строительством: важно все. И все начинается с хорошего куска земли. Как мы находим
-            «тот самый» кусок земли?
-          </p>
-
-          <p>
-            Во-первых, важно следить за рынком: смотреть на больших застройщиков, наблюдать на
-            генпланом, получать инсайды. То, что сейчас выглядит унылым пустырем, через два года,
-            возможно, станет центром притяжения.
-          </p>
-
-          <p>
-            Во-вторых, чтобы находить такие лоты нужен опытный взгляд. И интуиция. За 10 лет мы
-            построили и запустили 8 торговых центров — и уже неплохо разобрались в вопросе.
-          </p>
-
-          <p>
-            На наши будущие объекты мы можем посмотреть и глазами арендаторов (коммуникации,
-            логистическая доступность, показатели по посещаемости), и глазами обычных людей –
-            посетителей ТЦ или сотрудников бизнес-центра.
-          </p>
-
-          <p>
-            Если мы видим в участке потенциал, мы покупаем его. Обычно на этом этапе у нас уже есть
-            общее понимание, что строить. Но это понимание нужно детализировать.
-          </p>
-        </Section>
-        <Section step={step} setStep={setStep} index={3} title={`Проекти-рование`}>
-          <p>
-            С недвижимостью как с едой. Сложно приготовить что-то вкусное из плохих продуктов. Так и
-            со строительством: важно все. И все начинается с хорошего куска земли. Как мы находим
-            «тот самый» кусок земли?
-          </p>
-
-          <p>
-            Во-первых, важно следить за рынком: смотреть на больших застройщиков, наблюдать на
-            генпланом, получать инсайды. То, что сейчас выглядит унылым пустырем, через два года,
-            возможно, станет центром притяжения.
-          </p>
-
-          <p>
-            Во-вторых, чтобы находить такие лоты нужен опытный взгляд. И интуиция. За 10 лет мы
-            построили и запустили 8 торговых центров — и уже неплохо разобрались в вопросе.
-          </p>
-
-          <p>
-            На наши будущие объекты мы можем посмотреть и глазами арендаторов (коммуникации,
-            логистическая доступность, показатели по посещаемости), и глазами обычных людей –
-            посетителей ТЦ или сотрудников бизнес-центра.
-          </p>
-
-          <p>
-            Если мы видим в участке потенциал, мы покупаем его. Обычно на этом этапе у нас уже есть
-            общее понимание, что строить. Но это понимание нужно детализировать.
-          </p>
-        </Section>
-        <Section step={step} setStep={setStep} index={4} title={`Стро-ительство`}>
-          <p>
-            С недвижимостью как с едой. Сложно приготовить что-то вкусное из плохих продуктов. Так и
-            со строительством: важно все. И все начинается с хорошего куска земли. Как мы находим
-            «тот самый» кусок земли?
-          </p>
-
-          <p>
-            Во-первых, важно следить за рынком: смотреть на больших застройщиков, наблюдать на
-            генпланом, получать инсайды. То, что сейчас выглядит унылым пустырем, через два года,
-            возможно, станет центром притяжения.
-          </p>
-
-          <p>
-            Во-вторых, чтобы находить такие лоты нужен опытный взгляд. И интуиция. За 10 лет мы
-            построили и запустили 8 торговых центров — и уже неплохо разобрались в вопросе.
-          </p>
-
-          <p>
-            На наши будущие объекты мы можем посмотреть и глазами арендаторов (коммуникации,
-            логистическая доступность, показатели по посещаемости), и глазами обычных людей –
-            посетителей ТЦ или сотрудников бизнес-центра.
-          </p>
-
-          <p>
-            Если мы видим в участке потенциал, мы покупаем его. Обычно на этом этапе у нас уже есть
-            общее понимание, что строить. Но это понимание нужно детализировать.
-          </p>
-        </Section>
-        <Section step={step} setStep={setStep} index={5} title={`Поиск аренда-торов`}>
-          <p>
-            С недвижимостью как с едой. Сложно приготовить что-то вкусное из плохих продуктов. Так и
-            со строительством: важно все. И все начинается с хорошего куска земли. Как мы находим
-            «тот самый» кусок земли?
-          </p>
-
-          <p>
-            Во-первых, важно следить за рынком: смотреть на больших застройщиков, наблюдать на
-            генпланом, получать инсайды. То, что сейчас выглядит унылым пустырем, через два года,
-            возможно, станет центром притяжения.
-          </p>
-
-          <p>
-            Во-вторых, чтобы находить такие лоты нужен опытный взгляд. И интуиция. За 10 лет мы
-            построили и запустили 8 торговых центров — и уже неплохо разобрались в вопросе.
-          </p>
-
-          <p>
-            На наши будущие объекты мы можем посмотреть и глазами арендаторов (коммуникации,
-            логистическая доступность, показатели по посещаемости), и глазами обычных людей –
-            посетителей ТЦ или сотрудников бизнес-центра.
-          </p>
-
-          <p>
-            Если мы видим в участке потенциал, мы покупаем его. Обычно на этом этапе у нас уже есть
-            общее понимание, что строить. Но это понимание нужно детализировать.
-          </p>
-        </Section>
-        <Section step={step} setStep={setStep} index={6} title={`Жизнь проекта`}>
-          <p>
-            С недвижимостью как с едой. Сложно приготовить что-то вкусное из плохих продуктов. Так и
-            со строительством: важно все. И все начинается с хорошего куска земли. Как мы находим
-            «тот самый» кусок земли?
-          </p>
-
-          <p>
-            Во-первых, важно следить за рынком: смотреть на больших застройщиков, наблюдать на
-            генпланом, получать инсайды. То, что сейчас выглядит унылым пустырем, через два года,
-            возможно, станет центром притяжения.
-          </p>
-
-          <p>
-            Во-вторых, чтобы находить такие лоты нужен опытный взгляд. И интуиция. За 10 лет мы
-            построили и запустили 8 торговых центров — и уже неплохо разобрались в вопросе.
-          </p>
-
-          <p>
-            На наши будущие объекты мы можем посмотреть и глазами арендаторов (коммуникации,
-            логистическая доступность, показатели по посещаемости), и глазами обычных людей –
-            посетителей ТЦ или сотрудников бизнес-центра.
-          </p>
-
-          <p>
-            Если мы видим в участке потенциал, мы покупаем его. Обычно на этом этапе у нас уже есть
-            общее понимание, что строить. Но это понимание нужно детализировать.
-          </p>
-        </Section>
-      </div>
+    <div css={bp({})}>
+      <Logo fullwidth={!shrink}></Logo>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1, transition: { duration: 0.3 } }}
+        css={bp({ ...relative })}>
+        {/* Background */}
+        <div css={bp({ ...absoluteFill, bottom: 0, pointerEvents: "none" })}>
+          <div
+            css={bp({
+              position: "sticky",
+              width: shrink ? "70%" : "100%",
+              marginLeft: "auto",
+              height: [stickyBottom - 88, "100vh"],
+              top: [stickyBackgroundTop + 88, 0],
+              transition: "width 200ms ease",
+              zIndex: 5,
+            })}>
+            <motion.div
+              // initial={{ opacity: 0 }}
+              // animate={{ opacity: 1, transition: { delay: 0.4, duration: 0.1 } }}
+              css={bp({
+                backgroundColor: "#F7F8F7",
+                position: "absolute",
+                top: 0,
+                left: [11, 22],
+                bottom: 22,
+                right: [11, 22],
+                opacity: 1,
+              })}></motion.div>
+          </div>
+        </div>
+        <Cover
+          setShowTagsOnDesktop={setShowTagsOnDesktop}
+          setShowTagsOnMobile={setShowTagsOnMobile}
+        />
+        {/* Content Scroller */}
+        <div css={bp({ display: ["block", "flex"], flexDirection: "row-reverse", ...relative })}>
+          {/* Sticky */}
+          <div
+            css={bp({
+              pointerEvents: "none",
+              flexBasis: "70%",
+              position: ["absolute", "relative"],
+              width: ["100%", "auto"],
+              height: ["100%", "auto"],
+              marginBottom: [0, 44],
+            })}>
+            <Sticky setStickyBottom={setStickyBottom} section={section} />
+          </div>
+          {/* Content */}
+          <div
+            css={bp({
+              flexBasis: "30%",
+              paddingTop: 0,
+              zIndex: 10,
+              paddingBottom: [0, 300],
+              paddingTop: ["75%", 0],
+            })}>
+            <div ref={contentRef}>
+              {sections.map((elem, index) => (
+                <Section
+                  key={index}
+                  index={index}
+                  notMobile={notMobile}
+                  section={elem}
+                  setSection={setSection}
+                  active={index == section}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
       <div
         css={bp({
           position: "fixed",
-          right: 22,
-          bottom: 22,
-          top: 88,
-          left: 475,
-          background: "#F7F8F7",
+          top: 68,
+          left: shrink ? "30%" : 0,
+          transition: "left 200ms ease",
+          zIndex: 7,
+          width: ["100%", "70%"],
+          padding: ["33px 22px", 44],
         })}>
-        <motion.div
-          animate={controls}
-          css={bp({ ...absoluteFill, left: 22, right: 22, bottom: 22 })}>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: step >= 0 ? 1 : 0 }}>
-            <Image
-              src={kron1}
-              style={{ width: "100%", height: "auto", position: "absolute", bottom: 0 }}
-            />
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: step == 1 ? 1 : 0 }}>
-            <Image
-              src={kron2}
-              style={{ width: "100%", height: "auto", position: "absolute", bottom: 0 }}
-            />
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: step == 2 ? 1 : 0 }}>
-            <Image
-              src={kron3}
-              style={{ width: "100%", height: "auto", position: "absolute", bottom: 0 }}
-            />
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: step == 3 ? 1 : 0 }}>
-            <Image
-              src={kron4}
-              style={{ width: "100%", height: "auto", position: "absolute", bottom: 0 }}
-            />
-          </motion.div>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: step == 4 ? 1 : 0 }}>
-            <Image
-              src={kron5}
-              style={{ width: "100%", height: "auto", position: "absolute", bottom: 0 }}
-            />
-          </motion.div>
-        </motion.div>
-        <Tags active={step + 1} />
+        {true && (
+          <Tags
+            section={section}
+            // show={(shrink && !secondTagsInView) || !shrink}
+            show={showTags}
+            hide={secondTagsInView}
+            // onlyLast={!shrink}
+            stickyBottom={stickyBottom}
+            notMobile={notMobile}
+          />
+        )}
       </div>
-      {/* <div
+      <div
+        ref={secondTags}
         css={bp({
-          position: "relative",
-          width: "calc(100% - 475px)",
-          // border: "1px solid black",
-          height: 5342,
-        })}></div> */}
-      <Cards />
+          width: shrink ? "70%" : "100%",
+          transition: "width 200ms ease",
+          position: "sticky",
+          top: 87,
+          marginTop: -22,
+          marginLeft: "auto",
+          zIndex: 5,
+          paddingBottom: [11, 22],
+          backgroundColor: "#fff",
+        })}>
+        <div
+          css={bp({
+            padding: [11, 22],
+            backgroundColor: "#F7F8F7",
+            // boxShadow: "0 1px 5px 0 rgba(0,0,0,0.16)",
+            margin: ["0 11px", "0 22px"],
+          })}>
+          <div css={bp({ opacity: 0 })}>
+            {/* Fake tags */}
+            <Tags section={7} show />
+          </div>
+        </div>
+      </div>
+      <div css={bp({})}>
+        <Cards setSection={() => setSection(6)} id="section-cards" />
+      </div>
+      <Projects setSection={() => setSection(7)} id="section-projects" notMobile={notMobile} />
+      <FAQ setSection={() => setSection(8)} id="section-faq" />
+      <Contact setSection={() => setSection(9)} id="section-contact" />
+      <Footer />
     </div>
   )
 }

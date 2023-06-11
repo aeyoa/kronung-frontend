@@ -4,8 +4,10 @@ import { useMeasure } from "@react-hookz/web"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { useScrollIntoView } from "@mantine/hooks"
+import { useRouter } from "next/router"
 
 export default function Logo(props) {
+  const router = useRouter()
   const scrollToTop = () => {
     window.scrollTo({ top: 0 })
   }
@@ -18,7 +20,15 @@ export default function Logo(props) {
   }, [mes])
   // if (p == 40) return <div></div>
   return (
-    <motion.div onClick={scrollToTop} css={bp({ height: 88, ...relative, zIndex: 9, ...pointer })}>
+    <motion.div
+      onClick={
+        props.subpage
+          ? () => {
+              router.push("/")
+            }
+          : scrollToTop
+      }
+      css={bp({ height: 88, ...relative, zIndex: 9, ...pointer })}>
       <div
         css={bp({
           height: 88,

@@ -64,17 +64,17 @@ export default function Sticky({ setStickyBottom, section }) {
     //     rotate: { type: "spring", velocity: 75, stiffness: 500, damping: 10 },
     //   },
     // })
-    // if (section > 1 && section < 6) {
-    //   controls.start({
-    //     scale: 1,
-    //     transition: {
-    //       type: "spring",
-    //       velocity: -3,
-    //       stiffness: 750,
-    //       damping: 50,
-    //     },
-    //   })
-    // }
+    if (section > 1 && section < 6) {
+      controls.start({
+        scale: 1,
+        transition: {
+          type: "spring",
+          velocity: -3,
+          stiffness: 750,
+          damping: 50,
+        },
+      })
+    }
   }, [section])
 
   return (

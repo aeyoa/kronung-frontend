@@ -19,7 +19,7 @@ export default function Contact({ setSection, id }) {
         margin: [11, 22],
         padding: [11, 22],
         backgroundColor: "#F7F8F7",
-        minHeight: "calc(100vh - 88px - 202px)",
+        minHeight: ["calc(100vh - 233px)", "calc(100vh - 88px - 202px)"],
       })}>
       <div
         css={bp({

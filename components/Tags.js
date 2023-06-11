@@ -5,7 +5,7 @@ import { noSelect } from "@/styles/mixins"
 import { useEffect, useState } from "react"
 import { useScrollIntoView } from "@mantine/hooks"
 
-export default function Tags({ section, show, hide }) {
+export default function Tags({ section, show, hide, stickyBottom, notMobile }) {
   const initial = [
     { text: "ВЫБОР ЗЕМЛИ", id: "section-1" },
     { text: "ПРОЕКТИРОВАНИЕ", id: "section-2" },
@@ -46,15 +46,19 @@ export default function Tags({ section, show, hide }) {
           key={index}
           active={index == section - 1}
           id={text.id}
+          stickyBottom={stickyBottom}
+          notMobile={notMobile}
         />
       ))}
     </motion.div>
   )
 }
 
-function Tag({ text, active, show, index, hide, id }) {
+function Tag({ text, active, show, index, hide, id, notMobile, stickyBottom }) {
   const scrollToSection = () => {
-    const offset = document.getElementById(id).getBoundingClientRect().top + window.scrollY - 190
+    const fromTop = notMobile ? 190 : index < 5 ? 480 : 156
+    const offset =
+      document.getElementById(id).getBoundingClientRect().top + window.scrollY - fromTop
     window.scrollTo({ top: offset, behavior: "smooth" })
   }
   return (

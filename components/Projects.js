@@ -2,8 +2,9 @@ import bp from "@/styles/breakpoints"
 import { absoluteFill, pointer, relative } from "@/styles/mixins"
 import Image from "next/image"
 import { motion, useInView, useScroll, useTransform } from "framer-motion"
+import Link from "next/link"
 
-import project1 from "/public/img/project-1.jpg"
+import project1 from "/public/img/soln-1.jpg"
 import { useEffect, useRef } from "react"
 
 const AnimatedImage = ({ notMobile }) => {
@@ -56,47 +57,48 @@ export default function Projects({ setSection, id, notMobile }) {
   return (
     <div ref={ref} id={id} css={bp({ margin: ["5px 11px", "11px"] })}>
       {/* Main desc */}
-      <div
-        css={bp({
-          margin: [0, 11],
-          padding: ["14px 14px", 33],
-          backgroundColor: "#F7F8F7",
-          display: ["block", "flex"],
-          ...pointer,
-        })}>
-        <h3
+      <Link href="/projects/soln-gorod">
+        <div
           css={bp({
-            color: "#A7C0CD",
-            fontFamily: "DrukSuper",
-            textTransform: "uppercase",
-            fontSize: [50, 50, 70],
-            lineHeight: 1,
-            margin: 0,
-            flexBasis: "50%",
+            margin: [0, 11],
+            padding: ["14px 14px", 33],
+            backgroundColor: "#F7F8F7",
+            display: ["block", "flex"],
+            ...pointer,
           })}>
-          Солнечный
-          <br />
-          город
-        </h3>
-        <p
-          css={bp({
-            flexBasis: "50%",
-            margin: 0,
-            marginTop: [16, 0],
-            fontSize: 15,
-            letterSpacing: "-0.3px",
-            lineHeight: "1.5em",
-          })}>
-          Большой ТЦ в новом районе в поселке Горелово. Это будет целый кластер объектов с классной
-          парковой территорией, детскими площадками, ресторанами и кафе. Запуск запланирован на 2024
-          год. Вокруг строится жилье объемом 20000 человек, так что Сосновая площадь станет
-          локальным местом притяжения. Проект доступен для инвестиций.{" "}
-        </p>
-      </div>
+          <h3
+            css={bp({
+              color: "#A7C0CD",
+              fontFamily: "DrukSuper",
+              textTransform: "uppercase",
+              fontSize: [50, 50, 70],
+              lineHeight: 1,
+              margin: 0,
+              flexBasis: "50%",
+            })}>
+            Солнечный город
+          </h3>
+          <p
+            css={bp({
+              flexBasis: "50%",
+              margin: 0,
+              marginTop: [16, 0],
+              fontSize: 15,
+              letterSpacing: "-0.3px",
+              lineHeight: "1.5em",
+            })}>
+            Небольшой одноэтажный торговый центр площадью 5000 м2 в новом, стремительно растущем
+            районе Петербурга. Практически идеальная планировка. Якорный арендатор — «Перекресток»
+            площадью 1700 м2.{" "}
+          </p>
+        </div>
+      </Link>
       {/* Main Image */}
-      <AnimatedImage src={project1} notMobile={notMobile} />
+      <Link href="/projects/soln-gorod">
+        <AnimatedImage src={project1} notMobile={notMobile} />
+      </Link>
       {/* Two more projects */}
-      <div css={bp({ display: ["block", "flex"], alignContent: "flex-start" })}>
+      {/* <div css={bp({ display: ["block", "flex"], alignContent: "flex-start" })}>
         <div
           css={bp({
             margin: [0, "0 11px"],
@@ -142,7 +144,7 @@ export default function Projects({ setSection, id, notMobile }) {
             на Новой улице
           </h3>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
