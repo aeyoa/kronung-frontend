@@ -87,9 +87,9 @@ export default function Projects({ setSection, id, notMobile }) {
               letterSpacing: "-0.3px",
               lineHeight: "1.5em",
             })}>
-            Небольшой одноэтажный торговый центр площадью 5000 м2 в новом, стремительно растущем
+            Небольшой одноэтажный торговый центр площадью 5000 м² в новом, стремительно растущем
             районе Петербурга. Практически идеальная планировка. Якорный арендатор — «Перекресток»
-            площадью 1700 м2.{" "}
+            площадью 1700 м².{" "}
           </p>
         </div>
       </Link>
@@ -98,7 +98,7 @@ export default function Projects({ setSection, id, notMobile }) {
         <AnimatedImage src={project1} notMobile={notMobile} />
       </Link>
       {/* Two more projects */}
-      {/* <div css={bp({ display: ["block", "flex"], alignContent: "flex-start" })}>
+      <div css={bp({ display: ["block", "flex"], alignContent: "flex-start" })}>
         <div
           css={bp({
             margin: [0, "0 11px"],
@@ -106,7 +106,8 @@ export default function Projects({ setSection, id, notMobile }) {
             padding: [11, 22],
             backgroundColor: "#F7F8F7",
             marginBottom: [11, 0],
-            ...pointer,
+            // ...pointer,
+            ...relative,
           })}>
           <h3
             css={bp({
@@ -121,6 +122,17 @@ export default function Projects({ setSection, id, notMobile }) {
             <br />
             Square
           </h3>
+          <div
+            css={bp({
+              // position: "absolute",
+              marginTop: [12],
+              right: [11, 22],
+              bottom: [11, 22],
+              opacity: 0.4,
+              fontSize: [13, 15],
+            })}>
+            добавляем на сайт
+          </div>
         </div>
         <div
           css={bp({
@@ -128,7 +140,8 @@ export default function Projects({ setSection, id, notMobile }) {
             flexBasis: "50%",
             padding: [11, 22],
             backgroundColor: "#F7F8F7",
-            ...pointer,
+            // ...pointer,
+            ...relative,
           })}>
           <h3
             css={bp({
@@ -143,8 +156,19 @@ export default function Projects({ setSection, id, notMobile }) {
             <br />
             на Новой улице
           </h3>
+          <div
+            css={bp({
+              // position: "absolute",
+              marginTop: [12],
+              right: [11, 22],
+              bottom: [11, 22],
+              opacity: 0.4,
+              fontSize: [13, 15],
+            })}>
+            добавляем на сайт
+          </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
