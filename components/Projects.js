@@ -99,41 +99,43 @@ export default function Projects({ setSection, id, notMobile }) {
       </Link>
       {/* Two more projects */}
       <div css={bp({ display: ["block", "flex"], alignContent: "flex-start" })}>
-        <div
-          css={bp({
-            margin: [0, "0 11px"],
-            flexBasis: "50%",
-            padding: [11, 22],
-            backgroundColor: "#F7F8F7",
-            marginBottom: [11, 0],
-            // ...pointer,
-            ...relative,
-          })}>
-          <h3
-            css={bp({
-              color: "#A7C0CD",
-              fontFamily: "DrukSuper",
-              textTransform: "uppercase",
-              fontSize: [50, 50, 70],
-              lineHeight: 1,
-              margin: 0,
-            })}>
-            Янино
-            <br />
-            Square
-          </h3>
+        <Link href={"/projects/yanino"} css={bp({ flexBasis: "50%" })}>
           <div
             css={bp({
-              // position: "absolute",
-              marginTop: [12],
-              right: [11, 22],
-              bottom: [11, 22],
-              opacity: 0.4,
-              fontSize: [13, 15],
+              margin: [0, "0 11px"],
+              flexBasis: "50%",
+              padding: [11, 22],
+              backgroundColor: "#F7F8F7",
+              marginBottom: [11, 0],
+              // ...pointer,
+              ...relative,
             })}>
-            добавляем на сайт
+            <h3
+              css={bp({
+                color: "#A7C0CD",
+                fontFamily: "DrukSuper",
+                textTransform: "uppercase",
+                fontSize: [50, 50, 70],
+                lineHeight: 1,
+                margin: 0,
+              })}>
+              Янино
+              <br />
+              Маркет
+            </h3>
+            <div
+              css={bp({
+                // position: "absolute",
+                marginTop: [12],
+                right: [11, 22],
+                bottom: [11, 22],
+                opacity: 0.4,
+                fontSize: [13, 15],
+              })}>
+              объект сдан
+            </div>
           </div>
-        </div>
+        </Link>
         <div
           css={bp({
             margin: [0, "0 11px"],
