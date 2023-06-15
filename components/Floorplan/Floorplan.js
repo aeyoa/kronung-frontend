@@ -1,5 +1,5 @@
 import bp from "@/styles/breakpoints"
-import Vector from "./Vector"
+import Vector from "./Vector2"
 import { boxPadding } from "@/styles/mixins"
 import { useViewportSize } from "@mantine/hooks"
 import { useEffect, useState } from "react"
